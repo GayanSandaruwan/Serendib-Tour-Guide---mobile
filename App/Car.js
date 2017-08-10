@@ -9,7 +9,7 @@ import {
 
 const { width } = Dimensions.get("window");
 
-export default class Restaurant extends Component {
+export default class Car extends Component {
 
 
     constructor(props){
@@ -23,13 +23,13 @@ export default class Restaurant extends Component {
 
     loadComponent(component){
 
-               this.props.loadReserve("REST",component);
+               this.props.loadReserve("CAB",component);
 
     }
 
     componentDidMount(){
-            console.log("Fetching Resturants Details")
-            fetch(this.props.url+'data/resturant/list', {
+            console.log("Fetching CARS Details")
+            fetch(this.props.url+'data/cars/list', {
                        method: 'GET',
                        headers: {
                          'Accept': 'application/json',
@@ -42,14 +42,14 @@ export default class Restaurant extends Component {
                       .then((responseJson) => {
                             if(responseJson.message){
                                   console.log(responseJson);
-                                  this.setState({restaurants : responseJson.resturants,
+                                  this.setState({cars : responseJson.cars,
                                   load : true
                                   });
                             }
                             })
                       .catch((error) => {
                             console.error(error);
-                            this.state = {restaurants : 'Restaurants Retrieval Failed !'};
+                            this.state = {cars : 'CARS Retrieval Failed !'};
                 });
 
     }
@@ -70,17 +70,19 @@ export default class Restaurant extends Component {
       }
     });
 
-            let restaurants =null;
+            let places =null;
             if(this.state.load){
-                restaurants = this.state.restaurants.map(restaurant => (
-                         <TouchableHighlight onPress={()=> this.loadComponent(restaurant)} style={tileStyle.sizesWrap} key={restaurant.Id} >
+                places = this.state.cars.map(car => (
+                         <TouchableHighlight onPress={()=> this.loadComponent(car)} style={tileStyle.sizesWrap} key={car.Reg_no} >
                             <View style={styles.body}>
-                            <Image source={{uri: restaurant.Image}} style={styles.item ,tileStyle.sizesIcon } />
+                            <Image source={{uri:car.Image}} style={styles.item ,tileStyle.sizesIcon } />
                                 <View style= {tileStyle.details}>
-                                <Text style={{fontSize : width/25}}> Resturant : {restaurant.Name}</Text>
-                                <Text style={{fontSize : width/25}}> Owner  :{restaurant.Owner}</Text>
-                                <Text style={{fontSize : width/25}}> Cost   :{restaurant.Cost}</Text>
-                                <Text style={{fontSize : width/25}}> Location   :{restaurant.Location}</Text>
+                                <Text style={{fontSize : width/25}}> Cost   :{car.Cost}</Text>
+                                <Text style={{fontSize : width/25}}> Owner  :{car.Owner}</Text>
+                                <Text style={{fontSize : width/25}}> Model   :{car.Model}</Text>
+                                <Text style={{fontSize : width/25}}> Reg. NO :{car.Reg_no}</Text>
+                                <Text style={{fontSize : width/25}}> Manufatured:{car.Manu_fac}</Text>
+
                                 </View>
                             </View>
                          </TouchableHighlight>
@@ -89,7 +91,7 @@ export default class Restaurant extends Component {
     return (
 
             <ScrollView style={{marginTop : 40}}>
-            {restaurants}
+            {places}
             </ScrollView>
 
               );

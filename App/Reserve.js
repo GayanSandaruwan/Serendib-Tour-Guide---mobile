@@ -12,7 +12,7 @@ export default class Reserve extends Component {
 
     this.state = {user: this.props.user, type : this.props.type, startOrEnd : "" ,
                     Object :this.props.Object, message:"Choose start & End Time",
-                    url : this.props.url,  isDateTimePickerVisible: false,
+                    url : this.props.url,  isDateTimePickerVisible: false,  Time_start : null,Time_end : null
                     };
 
                     console.log(this.state.url);
@@ -98,9 +98,12 @@ export default class Reserve extends Component {
       <View style={styles.container}>
         <View style={styles.buttonStart}>
         <Button onPress={this.showStartTimePicker} title="Startting Time" color="#841584"  />
+        <Text style={styles.datetime}> {this.state.Time_start +""}</Text>
         </View>
         <View style={styles.buttonEnd}>
-        <Button onPress={this.showStartTimePicker} title="Ending    Time" color="#841584" />
+        <Button onPress={this.showEndTimePicker} title="Ending    Time" color="#841584" />
+        <Text style={styles.datetime}> {this.state.Time_end +""}</Text>
+
         </View>
         <DateTimePicker
           isVisible={this.state.isDateTimePickerVisible}
@@ -135,12 +138,17 @@ const styles = StyleSheet.create({
           color : 'red'
   },
   buttonStart :{
-         justifyContent: "flex-start", flexDirection: "column", flexWrap: "wrap", marginBottom :20, position: 'absolute', width : width/2,
+         justifyContent: "flex-start", flexDirection: "column", flexWrap: "wrap", marginBottom :20, position: 'absolute', width : width,
                                                                                                  bottom:height-height/2,
   },
   buttonEnd:{
-     justifyContent: "flex-start", flexDirection: "column", flexWrap: "wrap", marginBottom :20, position: 'absolute',width : width/2,
+     justifyContent: "flex-start", flexDirection: "column", flexWrap: "wrap", marginBottom :20, position: 'absolute',width : width,
         bottom:height-3*height/4,
+  },
+  datetime:{
+            fontSize: 20,
+            fontWeight: 'bold',
+            color : 'green'
   }
 
 });

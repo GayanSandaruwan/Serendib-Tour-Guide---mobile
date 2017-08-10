@@ -16,7 +16,11 @@ import SignIn from './App/SignIn.js';
 import Home from './App/Home.js';
 import Map from './App/MapC.js';
 import Restaurant from './App/Restaurant.js';
+import Car from './App/Car.js';
+import Guide from './App/Guide.js';
 import Reserve from './App/Reserve.js';
+
+
 let RenderingComponent  =  null;
 let urlPrefix = "http://192.168.1.59:3001/";
 
@@ -48,12 +52,16 @@ export default class SerendibTourGuide extends Component {
         }
         else if(comp == "CAB"){
             console.log("CAB");
-            RenderingComponent = <Reserve url={urlPrefix} user={this.state.user} type={"CAB"} Object={{Id : 1}}/> ;
+            RenderingComponent = <Car url={urlPrefix} loadReserve={this.loadReserve}/>;
+
             this.setState({view : "CAB"});
 
         }
         else if(comp == "GUIDE"){
             console.log("GUIDE");
+            RenderingComponent = <Guide url={urlPrefix} loadReserve={this.loadReserve}/>;
+
+            this.setState({view : "GUDE"});
         }
         else if(comp == "TRIPS"){
             console.log("TRIPS");

@@ -9,7 +9,7 @@ import {
 
 const { width } = Dimensions.get("window");
 
-export default class Restaurant extends Component {
+export default class Guide extends Component {
 
 
     constructor(props){
@@ -23,13 +23,13 @@ export default class Restaurant extends Component {
 
     loadComponent(component){
 
-               this.props.loadReserve("REST",component);
+               this.props.loadReserve("GUIDE",component);
 
     }
 
     componentDidMount(){
-            console.log("Fetching Resturants Details")
-            fetch(this.props.url+'data/resturant/list', {
+            console.log("Fetching GUIDES Details")
+            fetch(this.props.url+'data/guide/list', {
                        method: 'GET',
                        headers: {
                          'Accept': 'application/json',
@@ -42,14 +42,14 @@ export default class Restaurant extends Component {
                       .then((responseJson) => {
                             if(responseJson.message){
                                   console.log(responseJson);
-                                  this.setState({restaurants : responseJson.resturants,
+                                  this.setState({guides : responseJson.guides,
                                   load : true
                                   });
                             }
                             })
                       .catch((error) => {
                             console.error(error);
-                            this.state = {restaurants : 'Restaurants Retrieval Failed !'};
+                            this.state = {guides : 'CARS Retrieval Failed !'};
                 });
 
     }
@@ -70,17 +70,17 @@ export default class Restaurant extends Component {
       }
     });
 
-            let restaurants =null;
+            let places =null;
             if(this.state.load){
-                restaurants = this.state.restaurants.map(restaurant => (
-                         <TouchableHighlight onPress={()=> this.loadComponent(restaurant)} style={tileStyle.sizesWrap} key={restaurant.Id} >
+                places = this.state.guides.map(guide => (
+                         <TouchableHighlight onPress={()=> this.loadComponent(guide)} style={tileStyle.sizesWrap} key={guide.NIC} >
                             <View style={styles.body}>
-                            <Image source={{uri: restaurant.Image}} style={styles.item ,tileStyle.sizesIcon } />
+                            <Image source={{uri:guide.Image}} style={styles.item ,tileStyle.sizesIcon } />
                                 <View style= {tileStyle.details}>
-                                <Text style={{fontSize : width/25}}> Resturant : {restaurant.Name}</Text>
-                                <Text style={{fontSize : width/25}}> Owner  :{restaurant.Owner}</Text>
-                                <Text style={{fontSize : width/25}}> Cost   :{restaurant.Cost}</Text>
-                                <Text style={{fontSize : width/25}}> Location   :{restaurant.Location}</Text>
+                                <Text style={{fontSize : width/25}}> Cost   :{guide.Cost}</Text>
+                                <Text style={{fontSize : width/25}}> Name  :{guide.Name}</Text>
+                                <Text style={{fontSize : width/25}}> Age   :{guide.Age}</Text>
+                                <Text style={{fontSize : width/25}}> NIC :{guide.NIC}</Text>
                                 </View>
                             </View>
                          </TouchableHighlight>
@@ -89,7 +89,7 @@ export default class Restaurant extends Component {
     return (
 
             <ScrollView style={{marginTop : 40}}>
-            {restaurants}
+            {places}
             </ScrollView>
 
               );
