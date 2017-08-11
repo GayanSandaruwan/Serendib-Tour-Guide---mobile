@@ -10,19 +10,26 @@ import {
   StyleSheet,
   Text,
   View,
-  Button
+  Button, Dimensions
 } from 'react-native';
+const { width,height } = Dimensions.get("window");
+
+
 import SignIn from './App/SignIn.js';
 import Home from './App/Home.js';
 import Map from './App/MapC.js';
 import Restaurant from './App/Restaurant.js';
 import Car from './App/Car.js';
 import Guide from './App/Guide.js';
+import Place from './App/Place.js';
 import Reserve from './App/Reserve.js';
+import HeaderM from './App/Header.js';
 
 
 let RenderingComponent  =  null;
-let urlPrefix = "http://192.168.1.59:3001/";
+let urlPrefix = "http://192.168.6.119:3001/";
+console.disableYellowBox = true;
+
 
 export default class SerendibTourGuide extends Component {
 
@@ -47,28 +54,49 @@ export default class SerendibTourGuide extends Component {
         }
         if(comp == "REST"){
             console.log("REST");
-            RenderingComponent = <Restaurant url={urlPrefix} loadReserve={this.loadReserve}/>;
+            RenderingComponent =
+                        <View style={styles.header}>
+                            <HeaderM loadHome={this.loadHome} user={this.state.user} loadComponent={this.loadComponent} comp={comp}/>
+                            <Restaurant url={urlPrefix} loadReserve={this.loadReserve}/>
+                         </View>;
             this.setState({view : "REST"});
         }
         else if(comp == "CAB"){
             console.log("CAB");
-            RenderingComponent = <Car url={urlPrefix} loadReserve={this.loadReserve}/>;
-
+            RenderingComponent =
+                        <View style={styles.header}>
+                            <HeaderM loadHome={this.loadHome} user={this.state.user} loadComponent={this.loadComponent} comp={comp}/>
+                            <Car url={urlPrefix} loadReserve={this.loadReserve}/>
+                         </View>;
             this.setState({view : "CAB"});
 
         }
         else if(comp == "GUIDE"){
-            console.log("GUIDE");
-            RenderingComponent = <Guide url={urlPrefix} loadReserve={this.loadReserve}/>;
-
+           console.log("GUIDE");
+           RenderingComponent =
+                        <View style={styles.header}>
+                            <HeaderM loadHome={this.loadHome} user={this.state.user} loadComponent={this.loadComponent} comp={comp}/>
+                            <Guide url={urlPrefix} loadReserve={this.loadReserve}/>
+                         </View>;
             this.setState({view : "GUDE"});
         }
         else if(comp == "TRIPS"){
-            console.log("TRIPS");
+           console.log("TRIPS");
+           RenderingComponent =
+                        <View style={styles.header}>
+                            <HeaderM loadHome={this.loadHome} user={this.state.user} loadComponent={this.loadComponent} comp={comp}/>
+                            <Map url={urlPrefix} />
+                         </View>;
+            this.setState({view : "TRIPS"});
+
         }
         else if(comp == "PLACE"){
             console.log("PLACE");
-            RenderingComponent = <Map url={urlPrefix}/>
+            RenderingComponent =
+                            <View style={styles.header}>
+                            <HeaderM loadHome={this.loadHome} user={this.state.user} loadComponent={this.loadComponent} comp={comp}/>
+                                <Place url={urlPrefix}/>
+                             </View>;
             this.setState({view: "PLACE"});
 
         }
@@ -76,7 +104,9 @@ export default class SerendibTourGuide extends Component {
 
     loadReserve(type,object){
 
-        RenderingComponent = <Reserve url={urlPrefix} user={this.state.user} type={type} Object={object}/> ;
+        RenderingComponent =
+                                 <Reserve url={urlPrefix} user={this.state.user} type={type} Object={object} returnHome={this.loadHome}/>
+
         this.setState({view : "RESERVE"})
 
     }
@@ -85,7 +115,9 @@ export default class SerendibTourGuide extends Component {
        // e.preventDefault();
         console.log("Loading Home" + user.first_name);
         RenderingComponent = <Home url= {"Yeah Working!!"} loadComponent = {this.loadComponent}/>;
+
         this.setState({view : "HOME", user : user});
+
 
     }
   render() {
@@ -113,6 +145,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
+  },
+
+  header:{
+            justifyContent: "flex-start", flexDirection: "column", flexWrap: "wrap",
+
   },
 });
 

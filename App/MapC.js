@@ -6,9 +6,10 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
+  Button, Dimensions
 } from 'react-native';
 
+const { width,height } = Dimensions.get("window");
 
 export default class Map extends Component {
 
@@ -18,58 +19,69 @@ export default class Map extends Component {
 
         //this.loadHome = this.loadHome.bind(this);
         this.state = {load : false,
-                    latitude : "6.7167",
-                    longitude : "79.86"
-
-        };
+                        latitude : "7.1870",
+                        longitude : "79.8209"
+                        };
 
     }
 
     componentDidMount(){
 
-            navigator.geolocation.getCurrentPosition(
-              (position) => {
-                console.log("getCurrentPosition Success");
-                this.setState({
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude,
-                    speed : position.coords.speed,
-                });
-              },
-              (error) => {
-//                this.props.displayError("Error dectecting your location");
-                alert(JSON.stringify(error))
-              },
-              {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-            );
 
-            fetch(this.props.url+'data/place/distances', {
-                       method: 'POST',
-                       headers: {
-                         'Accept': 'application/json',
-                         'Content-Type': 'application/json',
-                       },
-                       body: JSON.stringify({
-                            lat : this.state.latitude,
-                            lang : this.state.longitude
-                        })
-                     })
-                      .then((response) => response.json())
+            this.loadLocationDetails();
 
-                      .then((responseJson) => {
-                            if(responseJson){
-                                  console.log(responseJson);
-                                  this.setState({markers : responseJson,
-                                  load : true
-                                  });
-                            }
-                            })
-                      .catch((error) => {
-                            console.error(error);
-                            this.state = {locations : 'Locations Retrieval Failed !'};
-                });
 
     }
+
+    loadLocationDetails(){
+
+                navigator.geolocation.getCurrentPosition(
+                  (position) => {
+                    console.log("getCurrentPosition Success");
+                    this.setState({
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                    });
+                  },
+                  (error) => {
+    //                this.props.displayError("Error dectecting your location");
+                    alert(JSON.stringify(error))
+                  },
+                  {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+                );
+
+                if(this.state.latitude){
+
+                    fetch(this.props.url+'data/place/distances', {
+                               method: 'POST',
+                               headers: {
+                                 'Accept': 'application/json',
+                                 'Content-Type': 'application/json',
+                               },
+                               body: JSON.stringify({
+                                    lat : this.state.latitude,
+                                    lang : this.state.longitude
+                                })
+                             })
+                              .then((response) => response.json())
+
+                              .then((responseJson) => {
+                                    if(responseJson){
+                                          console.log(responseJson);
+                                          this.setState({markers : responseJson,
+                                          load : true
+                                          });
+                                    }
+                                    })
+                              .catch((error) => {
+                                    console.error(error);
+                                    this.state = {locations : 'Locations Retrieval Failed !'};
+                        });
+                }
+    }
+
+
+
 
 
 
@@ -112,11 +124,10 @@ export default class Map extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    ...StyleSheet.absoluteFillObject,
-    height: 500,
-    width: 400,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+     justifyContent: "flex-start", flexDirection: "row", flexWrap: "wrap",backgroundColor:'#3b5998',
+         height: 9*height/10 -10,
+         width: width-5,
+         alignItems: 'center',
 
   },
   map: {

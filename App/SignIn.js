@@ -10,8 +10,12 @@ import {
   StyleSheet,
   Text,
   View,
-  Button
+  Button, TextInput
 } from 'react-native';
+
+//import { TextField } from 'react-native-material-textfield';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { Fumi } from 'react-native-textinput-effects';
 
 export default class SignIn extends Component {
 
@@ -23,6 +27,8 @@ export default class SignIn extends Component {
         };
         this.logging = this.logging.bind(this);
         this.SignIn = this.SignIn.bind(this);
+        this.onChangeCode = this.onChangeCode.bind(this);
+        this.onChangeEmail = this.onChangeEmail.bind(this);
     }
 
     logging(e){
@@ -31,56 +37,88 @@ export default class SignIn extends Component {
         this.setState({url : "Button Working",});
     }
 
+     onChangeCode(text){
+
+            this.setState({
+                code: text,
+            });
+
+        }
+
+        onChangeEmail(text){
+
+            this.setState({
+                email : text,
+            });
+        }
+
     SignIn(e){
         e.preventDefault();
+             fetch(this.state.url+'user/signin', {
+                       method: 'POST',
+                       headers: {
+                         'Accept': 'application/json',
+                         'Content-Type': 'application/json',
+                       },
+                       body: JSON.stringify({
+                         email : this.state.email,
+                         key:  this.state.code,
+                       })
+                     })
+                      .then((response) => response.json())
 
-        fetch(this.state.url+'user/signin', {
-               method: 'POST',
-               headers: {
-                 'Accept': 'application/json',
-                 'Content-Type': 'application/json',
-               },
-               body: JSON.stringify({
-                 email : 'gayankavirathne.14@cse.mrt.ac.lk',
-                 key:  'PTgbdk',
-               })
-             })
-              .then((response) => response.json())
+                      .then((responseJson) => {
+                            if(responseJson.message){
+                                this.setState({
+                                verified : true,});
+                                this.props.loadHome(responseJson.user);    //Calling LoadHome Function in the parent
 
-              .then((responseJson) => {
-                    if(responseJson.message){
-                        this.setState({
-                        verified : true,});
-                        this.props.loadHome(responseJson.user);    //Calling LoadHome Function in the parent
+                            }
+                            else{
+                                 this.setState({signInFailed : 'signInFailed - Wrong User Name Password'})
+                                 console.log("Sign In Failed");
+                            }
+                            })
+                      .catch((error) => {
+                            console.error(error);
+                            this.setState({signInFailed : 'Network Error occured!'})
+                            });
 
-                    }
-                    })
-              .catch((error) => {
-                    console.error(error);
-                    this.setState({signInFailed : 'signInFailed - Wrong User Name Passord'})
-                    });
+
     }
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          {this.state.url}
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.error}>
-            {this.state.signInFailed}
-        </Text>
-        <Button onPress={this.SignIn} title="SignIn"/>
-      </View>
+
+       <View style={styles.container2}>
+                          <Fumi style={styles.mail}
+                          label={'Your Email'}
+                          iconClass={MaterialIcons}
+                          iconName={'email'}
+                          iconColor={'#f95a25'}
+                          onChangeText = {this.onChangeEmail}
+                          />
+                          <Fumi style={styles.mail}
+                          label={'Password'}
+                          iconClass={MaterialIcons}
+                          iconName={'grain'}
+                          iconColor={'#f95a25'}
+                          secureTextEntry={true}
+                          onChangeText = {this.onChangeCode}
+                          />
+                                  <Text style={styles.error}>
+                                      {this.state.signInFailed}
+                                  </Text>
+                                  <Button onPress={this.SignIn} title="SignIn"/>
+                      </View>
+
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
+        ...StyleSheet.absoluteFillObject,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -101,5 +139,20 @@ const styles = StyleSheet.create({
     color: 'rgb(255,0,0)',
     marginBottom: 5,
   },
+
+    container2: {
+      ...StyleSheet.absoluteFillObject,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor:'#3b5998',
+
+    },
+      mail:{
+        height: 60,
+        width:  360,
+        marginBottom: 15,
+        fontWeight: 'bold',
+        opacity: 0.8,
+      }
 });
 

@@ -7,7 +7,7 @@ import {
     ScrollView
     } from 'react-native';
 
-const { width } = Dimensions.get("window");
+const { width,height } = Dimensions.get("window");
 
 export default class Car extends Component {
 
@@ -107,8 +107,10 @@ const calcTileDimensions = (deviceWidth, tpr) => {
 
 const styles = StyleSheet.create({
   container: {
-     justifyContent: "flex-start", flexDirection: "row", flexWrap: "wrap", marginTop: 30,backgroundColor:'#3b5998'
-
+     justifyContent: "flex-start", flexDirection: "row", flexWrap: "wrap",backgroundColor:'#3b5998',
+         height: 9*height/10,
+         width: width-5,
+         alignItems: 'center',
   },
   item: {
     backgroundColor: 'yellow',

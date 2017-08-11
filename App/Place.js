@@ -9,7 +9,7 @@ import {
 
 const { width,height } = Dimensions.get("window");
 
-export default class Guide extends Component {
+export default class Place extends Component {
 
 
     constructor(props){
@@ -23,13 +23,14 @@ export default class Guide extends Component {
 
     loadComponent(component){
 
-               this.props.loadReserve("GUIDE",component);
+//               this.props.loadReserve("CAB",component);
+                alert("A Great Place To Visit")
 
     }
 
     componentDidMount(){
-            console.log("Fetching GUIDES Details")
-            fetch(this.props.url+'data/guide/list', {
+            console.log("Fetching Places Details")
+            fetch(this.props.url+'data/place/list', {
                        method: 'GET',
                        headers: {
                          'Accept': 'application/json',
@@ -42,14 +43,14 @@ export default class Guide extends Component {
                       .then((responseJson) => {
                             if(responseJson.message){
                                   console.log(responseJson);
-                                  this.setState({guides : responseJson.guides,
+                                  this.setState({places : responseJson.places,
                                   load : true
                                   });
                             }
                             })
                       .catch((error) => {
                             console.error(error);
-                            this.state = {guides : 'CARS Retrieval Failed !'};
+                            this.state = {places : 'CARS Retrieval Failed !'};
                 });
 
     }
@@ -72,15 +73,15 @@ export default class Guide extends Component {
 
             let places =null;
             if(this.state.load){
-                places = this.state.guides.map(guide => (
-                         <TouchableHighlight onPress={()=> this.loadComponent(guide)} style={tileStyle.sizesWrap} key={guide.NIC} >
+                places = this.state.places.map(place => (
+                         <TouchableHighlight onPress={()=> this.loadComponent(place)} style={tileStyle.sizesWrap} key={place.Lat + place.Lang} >
                             <View style={styles.body}>
-                            <Image source={{uri:guide.Image}} style={styles.item ,tileStyle.sizesIcon } />
+                            <Image source={{uri:place.Image}} style={styles.item ,tileStyle.sizesIcon } />
                                 <View style= {tileStyle.details}>
-                                <Text style={{fontSize : width/25}}> Cost   :{guide.Cost}</Text>
-                                <Text style={{fontSize : width/25}}> Name  :{guide.Name}</Text>
-                                <Text style={{fontSize : width/25}}> Age   :{guide.Age}</Text>
-                                <Text style={{fontSize : width/25}}> NIC :{guide.NIC}</Text>
+                                <Text style={{fontSize : width/25}}> Name      :{place.Name}</Text>
+                                <Text style={{fontSize : width/25}}> Latitude  :{place.Lat}</Text>
+                                <Text style={{fontSize : width/25}}> Longitude   :{place.Lang}</Text>
+
                                 </View>
                             </View>
                          </TouchableHighlight>

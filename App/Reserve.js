@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, TouchableOpacity, View ,StyleSheet, Button,Dimensions} from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
+
   const { width, height } = Dimensions.get("window");
 
 export default class Reserve extends Component {
@@ -20,6 +21,7 @@ export default class Reserve extends Component {
     this.showStartTimePicker = this.showStartTimePicker.bind(this);
     this.showEndTimePicker = this.showEndTimePicker.bind(this);
     this.makeReservation = this.makeReservation.bind(this);
+    this.returnHome = this.returnHome.bind(this);
 
   }
 
@@ -55,6 +57,13 @@ export default class Reserve extends Component {
     this._hideDateTimePicker();
   };
 
+  returnHome(e){
+
+    e.preventDefault();
+    this.props.returnHome(this.props.user);
+
+  }
+
   makeReservation(e){
 
           e.preventDefault();
@@ -69,10 +78,11 @@ export default class Reserve extends Component {
                        body: JSON.stringify({
                            Reserv_Flag:  'true',
                            Success:  'false',
-                           Time_start   :  this.state.Time_start,
-                           Time_end     :  this.state.Time_end,
+                           Time_start   :  this.state.Time_start+"",
+                           Time_end     :  this.state.Time_end+"",
                            User_Id      :  this.state.user.Id,
                            Object_Id    :  this.state.Object.Id,
+                           User_Id      :  this.state.user.NIC,
                        })
                      })
                       .then((response) => response.json())
@@ -112,8 +122,12 @@ export default class Reserve extends Component {
           datePickerModeAndroid={'calendar'}
           mode={'datetime'}
         />
-        <Text style={styles.message}>{this.state.message}</Text>
-        <Button onPress={this.makeReservation} title={" Reserve "+this.state.type} color="green"/>
+        <View style ={styles.approveButton}>
+            <Text style={styles.message}>{this.state.message}</Text>
+            <Button onPress={this.makeReservation} title={" Reserve "+this.state.type} color="green"/>
+            <Button onPress={this.returnHome} title={" Return Home"} color="blue"/>
+
+        </View>
 
       </View>
     );
@@ -126,10 +140,10 @@ export default class Reserve extends Component {
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
-    height: 500,
-    width: 400,
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
     alignItems: 'center',
+     flexDirection: "column",
+     flexWrap: "wrap"
 
   },
   message :{
@@ -149,6 +163,10 @@ const styles = StyleSheet.create({
             fontSize: 20,
             fontWeight: 'bold',
             color : 'green'
+  },
+  approveButton: {
+        justifyContent: "flex-start", flexDirection: "column", flexWrap: "wrap", position: 'absolute', bottom:10, marginBottom:20
   }
+
 
 });
