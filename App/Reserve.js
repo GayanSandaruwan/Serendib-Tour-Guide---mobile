@@ -68,6 +68,8 @@ export default class Reserve extends Component {
 
           e.preventDefault();
           console.log("Trying to Reserve "+this.state.type);
+          this.setState({message : "Making Your reservation.. Please wait...."});
+          alert("Reservation on progress.. Wait a moment. ");
 
          fetch(this.state.url+'reserve/' +this.state.type, {
                        method: 'POST',
@@ -88,17 +90,27 @@ export default class Reserve extends Component {
                       .then((response) => response.json())
 
                       .then((responseJson) => {
-                            if(responseJson.message){
+                            if(responseJson.message==true){
                                 this.setState({
                                 message : 'Reservation Complete', reservation : responseJson.reservation});
 //                                this.props.loadHome(responseJson.user);    //Calling LoadHome Function in the parent
                             console.log("Reservation Complete");
+                                      alert("Successfully reserved." +this.state.type +" for user ID"+  this.state.user.Id );
+
 //
+                            }
+                            else {
+                                this.setState({
+                                message : 'Your have already reserved this!', reservation : responseJson.reservation});
+                            console.log("Duplicate Reservation, Failed!");
+                                  alert("Failed to reserve, Duplicate Entry.. ");
+
                             }
                             })
                       .catch((error) => {
                             console.error(error);
-                            this.setState({signInFailed : 'signInFailed - Wrong User Name Passord'})
+                            this.setState({message : 'signInFailed - Wrong User Name Passord'});
+                            alert("Network Connection Isuue.. Check your Internet connection");
                             });
 
       }

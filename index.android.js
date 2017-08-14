@@ -27,7 +27,7 @@ import HeaderM from './App/Header.js';
 
 
 let RenderingComponent  =  null;
-let urlPrefix = "http://192.168.6.119:3001/";
+let urlPrefix = "http://192.168.1.59:3001/";
 console.disableYellowBox = true;
 
 
