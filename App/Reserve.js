@@ -95,7 +95,7 @@ export default class Reserve extends Component {
                                 message : 'Reservation Complete', reservation : responseJson.reservation});
 //                                this.props.loadHome(responseJson.user);    //Calling LoadHome Function in the parent
                             console.log("Reservation Complete");
-                                      alert("Successfully reserved." +this.state.type +" for user ID"+  this.state.user.Id );
+                                      alert("Successfully reserved." +this.state.type +" for user ID :"+  this.state.user.NIC );
 
 //
                             }
