@@ -42,7 +42,7 @@ export default class Home extends Component {
           <View style={styles.container}>
             <View style ={styles.item ,tileStyle.sizesWrap}>
                  <TouchableHighlight onPress={()=> this.loadComponent("REST")}>
-                    <Image source={{uri: 'http://images.clipartpanda.com/restaurant-clipart-restaurant-building-clipart-great.jpg'}} style={styles.item ,tileStyle.sizesIcon } />
+                    <Image source={require('../Images/Restaurants.png')} style={styles.item ,tileStyle.sizesIcon } />
                  </TouchableHighlight>
                  <Text style={styles.itemText}>
                       Resturant
@@ -50,7 +50,7 @@ export default class Home extends Component {
             </View>
             <View style ={styles.item ,tileStyle.sizesWrap}>
                  <TouchableHighlight onPress={()=> this.loadComponent("CAB")}>
-                    <Image source={{uri: 'https://previews.123rf.com/images/mycartoonartist/mycartoonartist1106/mycartoonartist110600003/9699028-Taxicab-Driver-waving-Stock-Vector-cabbie-taxicab-cab.jpg'}} style={styles.item ,tileStyle.sizesIcon } />
+                    <Image source={require('../Images/cab.png')} style={styles.item ,tileStyle.sizesIcon } />
                  </TouchableHighlight>
                  <Text style={styles.itemText}>
                       Grab A Cab
@@ -58,7 +58,7 @@ export default class Home extends Component {
             </View>
             <View style ={styles.item ,tileStyle.sizesWrap}>
                  <TouchableHighlight onPress={()=> this.loadComponent("GUIDE")}>
-                    <Image source={{uri: 'https://comps.canstockphoto.com/can-stock-photo_csp22421656.jpg'}} style={styles.item ,tileStyle.sizesIcon } />
+                    <Image source={require('../Images/guide.jpg')} style={styles.item ,tileStyle.sizesIcon } />
                  </TouchableHighlight>
                  <Text style={styles.itemText}>
                    Your Guide
@@ -66,7 +66,7 @@ export default class Home extends Component {
             </View>
             <View style ={styles.item ,tileStyle.sizesWrap}>
                  <TouchableHighlight onPress={()=> this.loadComponent("TRIPS")}>
-                    <Image source={{uri: 'http://hddfhm.com/images/road-trip-clipart-13.jpg'}} style={styles.item ,tileStyle.sizesIcon } />
+                    <Image source={require('../Images/Day.png')} style={styles.item ,tileStyle.sizesIcon } />
                  </TouchableHighlight>
                  <Text style={styles.itemText}>
                        Day trips
@@ -74,7 +74,7 @@ export default class Home extends Component {
             </View>
             <View style ={styles.item ,tileStyle.sizesWrap}>
                  <TouchableHighlight onPress={()=> this.loadComponent("PLACE")}>
-                    <Image source={{uri: 'http://clipartix.com/wp-content/uploads/2016/06/Garden-clip-art-pictures-free-clipart-images-2.jpg'}} style={styles.item ,tileStyle.sizesIcon } />
+                    <Image source={require('../Images/places.jpg')} style={styles.item ,tileStyle.sizesIcon } />
                  </TouchableHighlight>
                  <Text style={styles.itemText}>
                      Places To Visit
