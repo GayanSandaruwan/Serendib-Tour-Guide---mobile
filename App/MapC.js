@@ -47,10 +47,9 @@ export default class Map extends Component {
     //                this.props.displayError("Error dectecting your location");
                     alert(JSON.stringify(error))
                   },
-                  {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+                  {enableHighAccuracy: true, timeout: 50000, maximumAge: 1000}
                 );
 
-                if(this.state.latitude){
 
                     fetch(this.props.url+'data/place/distances', {
                                method: 'POST',
@@ -77,7 +76,6 @@ export default class Map extends Component {
                                     console.error(error);
                                     this.state = {locations : 'Locations Retrieval Failed !'};
                         });
-                }
     }
 
 
