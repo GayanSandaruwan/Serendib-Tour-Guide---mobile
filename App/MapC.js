@@ -122,7 +122,7 @@ export default class Map extends Component {
 
 const styles = StyleSheet.create({
   container: {
-     justifyContent: "flex-start", flexDirection: "row", flexWrap: "wrap",backgroundColor:'#3b5998',
+     justifyContent: "flex-start", flexDirection: "column", flexWrap: "wrap",backgroundColor:'#3b5998',
          height: 9*height/10 -10,
          width: width-5,
          alignItems: 'center',
