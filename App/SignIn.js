@@ -10,8 +10,10 @@ import {
   StyleSheet,
   Text,
   View,
-  Button, TextInput
+  Button, TextInput, Dimensions
 } from 'react-native';
+const { width,height } = Dimensions.get("window");
+
 
 //import { TextField } from 'react-native-material-textfield';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -29,6 +31,7 @@ export default class SignIn extends Component {
         this.SignIn = this.SignIn.bind(this);
         this.onChangeCode = this.onChangeCode.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
+        this.registerUser = this.registerUser.bind(this);
     }
 
     logging(e){
@@ -51,6 +54,10 @@ export default class SignIn extends Component {
                 email : text,
             });
         }
+        registerUser(e){
+
+          this.props.loadComponent("REGISTER");
+        }
 
     SignIn(e){
         e.preventDefault();
@@ -72,7 +79,6 @@ export default class SignIn extends Component {
                                 this.setState({
                                 verified : true,});
                                 this.props.loadHome(responseJson.user);    //Calling LoadHome Function in the parent
-
                             }
                             else{
                                  this.setState({signInFailed : 'signInFailed - Wrong User Name Password'})
@@ -83,34 +89,37 @@ export default class SignIn extends Component {
                             console.error(error);
                             this.setState({signInFailed : 'Network Error occured!'})
                             });
-
-
     }
 
   render() {
     return (
 
        <View style={styles.container2}>
-                          <Fumi style={styles.mail}
-                          label={'Your Email'}
-                          iconClass={MaterialIcons}
-                          iconName={'email'}
-                          iconColor={'#f95a25'}
-                          onChangeText = {this.onChangeEmail}
-                          />
-                          <Fumi style={styles.mail}
-                          label={'Password'}
-                          iconClass={MaterialIcons}
-                          iconName={'grain'}
-                          iconColor={'#f95a25'}
-                          secureTextEntry={true}
-                          onChangeText = {this.onChangeCode}
-                          />
-                                  <Text style={styles.error}>
-                                      {this.state.signInFailed}
-                                  </Text>
-                                  <Button onPress={this.SignIn} title="SignIn"/>
-                      </View>
+                <Fumi style={styles.mail}
+                label={'Your Email'}
+                iconClass={MaterialIcons}
+                iconName={'email'}
+                iconColor={'#f95a25'}
+                onChangeText = {this.onChangeEmail}
+                />
+                <Fumi style={styles.mail}
+                label={'Password'}
+                iconClass={MaterialIcons}
+                iconName={'grain'}
+                iconColor={'#f95a25'}
+                secureTextEntry={true}
+                onChangeText = {this.onChangeCode}
+                />
+              <Text style={styles.error}>
+                  {this.state.signInFailed}
+              </Text>
+              <View  style={{marginBottom : 20}}>
+                  <Button onPress={this.SignIn} title="Sign In" />
+              </View>
+              <View style={{marginBottom : 20}}>
+                  <Button onPress={this.registerUser} title="Register" />
+              </View>
+        </View>
 
     );
   }
@@ -118,11 +127,15 @@ export default class SignIn extends Component {
 
 const styles = StyleSheet.create({
   container: {
-        ...StyleSheet.absoluteFillObject,
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+      overflow:  'hidden',
+      paddingTop: 16,
+      backgroundColor:  'white',
+      height: height,
+      width: width,
+      opacity: 0.8,    flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#F5FCFF',
   },
   welcome: {
     fontSize: 20,
@@ -141,7 +154,12 @@ const styles = StyleSheet.create({
   },
 
     container2: {
-      ...StyleSheet.absoluteFillObject,
+      overflow:  'hidden',
+      paddingTop: 16,
+      backgroundColor:  'white',
+      height: height,
+      width: width,
+      opacity: 0.8,
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor:'#3b5998',
@@ -149,7 +167,7 @@ const styles = StyleSheet.create({
     },
       mail:{
         height: 60,
-        width:  360,
+        width:  width-15,
         marginBottom: 15,
         fontWeight: 'bold',
         opacity: 0.8,

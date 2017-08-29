@@ -24,10 +24,11 @@ import Guide from './App/Guide.js';
 import Place from './App/Place.js';
 import Reserve from './App/Reserve.js';
 import HeaderM from './App/Header.js';
+import RegisterUser from './App/RegisterUser.js';
 
 
 let RenderingComponent  =  null;
-let urlPrefix = "http://192.168.6.119:3001/";
+let urlPrefix = "http://192.168.0.117:3001/";
 console.disableYellowBox = true;
 
 
@@ -43,13 +44,14 @@ export default class SerendibTourGuide extends Component {
         this.loadReserve = this.loadReserve.bind(this);
     }
     componentDidMount() {
-        RenderingComponent = <SignIn url= {urlPrefix} loadHome ={this.loadHome}/>;
+        RenderingComponent = <SignIn url= {urlPrefix} loadHome ={this.loadHome} loadComponent={this.loadComponent}/>;
 
         console.log("Starting Application");
         this.setState({view : "AUTH"});
     }
+
     loadComponent(comp){
-        console.log("asdfasd");
+        console.log("Loading Component... :" +comp);
         if(comp == null){
         }
         if(comp == "REST"){
@@ -100,15 +102,27 @@ export default class SerendibTourGuide extends Component {
             this.setState({view: "PLACE"});
 
         }
+        else if(comp == "REGISTER"){
+
+          console.log("REGISTER");
+          RenderingComponent = <RegisterUser url={urlPrefix} loadHome={this.loadHome} loadComponent={this.loadComponent}/>
+          this.setState({view: "REGISTER"});
+
+        }
+        else if(comp == "SIGNIN"){
+
+          console.log("SIGNIN");
+          RenderingComponent = <SignIn url= {urlPrefix} loadHome ={this.loadHome} loadComponent={this.loadComponent}/>
+          this.setState({view: "SIGNIN"});
+
+        }
     }
 
     loadReserve(type,object){
 
-        RenderingComponent =
-                                 <Reserve url={urlPrefix} user={this.state.user} type={type} Object={object} returnHome={this.loadHome}/>
+        RenderingComponent = <Reserve url={urlPrefix} user={this.state.user} type={type} Object={object} returnHome={this.loadHome}/>;
 
-        this.setState({view : "RESERVE"})
-
+        this.setState({view : "RESERVE"});
     }
 
     loadHome(user){
