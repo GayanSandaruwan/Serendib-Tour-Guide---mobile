@@ -28,7 +28,7 @@ import RegisterUser from './App/RegisterUser.js';
 
 
 let RenderingComponent  =  null;
-let urlPrefix = "http://192.168.0.117:3001/";
+let urlPrefix = "http://192.168.1.59:3001/";
 console.disableYellowBox = true;
 
 

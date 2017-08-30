@@ -33,7 +33,7 @@ export default class RegisterUser extends Component {
 			console.log("User Registration Details " +this.state.email +"  "+ this.state.first_name +" " +this.state.last_name +" "+this.state.NIC );
 
     	}
-    	else if(this.state.email.indexOf('@'.toLowerCase()) > -1){
+    	else if(this.state.email.indexOf('@'.toLowerCase())<= 0 || this.state.email.indexOf('.'.toLowerCase()) <=0){
 
     		this.setState({email : '', signInFailed : 'Enter a valid Email'});
 
